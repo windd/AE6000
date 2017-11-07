@@ -1,1 +1,9 @@
 *.txt
+EventRecorderStub.scvd
+JLinkSettings.ini
+RTE
+Objects
+Listings
+DebugConfig
+*.uvguix.dw
+*.uvoptx
