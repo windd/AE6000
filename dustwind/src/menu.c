@@ -26,6 +26,14 @@ void DisMainMenu0()
 
 void DisBBH()
 {
+	//LCDWword(1,0,0,menuID16[0]);
+    
+   // LCDWword(2,0,0,menuID16[1]);
+   // LCDWchar(2,9,0,menuID16[2]);
+    
+   // LCDWword(3,0,0,menuID16[3]);
+   // LCDWchar(3,9,0,menuID16[4]);
+	
     LCDWword(1, 2, 0, menuID16[0]);
     LCDWchar(2, 6, 0, menuID16[1]);
     LCDWchar(3, 7, 0, menuID16[2]);
@@ -471,7 +479,7 @@ void menusub(unchar key)
             }
             if(currmenu.ID == 13)
             {
-                if(currmenu.cur == 5 || currmenu.cur == 7 || currmenu.cur == 9 || currmenu.cur == 11 || currmenu.cur == 13 || currmenu.cur == 16 || currmenu.cur == 17 || currmenu.cur == 18 )
+                if(con_sm[currmenu.cur] == 0)
                 {
                     pCON[1] = pCON[1] == 92 ? 94 : 92;
                     pCON[2] = pCON[2] == 93 ? 33 : 93;
@@ -925,7 +933,7 @@ void menusub(unchar key)
             }
             if(currmenu.ID == 13)
             {
-                if(currmenu.cur == 5 || currmenu.cur == 7 || currmenu.cur == 9 || currmenu.cur == 11 || currmenu.cur == 13 || currmenu.cur == 16 || currmenu.cur == 17 || currmenu.cur == 18 )
+                if(con_sm[currmenu.cur] == 0)
                 {
                     pCON[1] = pCON[1] == 92 ? 94 : 92;
                     pCON[2] = pCON[2] == 93 ? 33 : 93;

@@ -9,6 +9,7 @@
 
 #include "stm32f10x.h"
 #include "typedef.h"
+#include "define.h"
 
 //spi:密码1 0,密码2 1，定值10-99，控制字100-149，出口150-199，压板200-249，系统参数250-299，通讯参数300-349。SOE350
 #define PW1ADDR 0
@@ -22,16 +23,7 @@
 #define SOEnumADDR 350
 #define SOEdataADDR 360
 
-//变量个数
-#define DZnum 19
-#define CONnum 19
-#define YCnum 26
-#define SYSnum 22
-#define YXnum 8
-#define OUTnum 20
-#define SWnum 20
-#define COMMnum 10
-#define SysErrnum 4
+
 
 //Password 0 SYS 1 DZ 10 CON 90  SOE 150
 #define SoeStAddr 3000////

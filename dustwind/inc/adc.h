@@ -3,9 +3,7 @@
 
 #include "stm32f10x.h"
 
-//====AD开启通道个数======================
-#define		ADC_ENB_NUM		14
-#define   Num_Adc_Chanel 14
+#include "define.h"
 
 
 extern uint16_t AD_Value[ADC_ENB_NUM] ; //DMA存储数据的区域

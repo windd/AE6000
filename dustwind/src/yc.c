@@ -295,15 +295,7 @@ void YCDFT()
         YC[YC_I2] = 0;
     }
 
-    if(CON[13] == 0xAA) //反时限过流保护 DZ[15]   CON13
-    {
-        int16_t Imax, Imin;
-        px(&Imax, &Imin, &YC[3]);
-        if(Imax > DZ[15])
-        {
-            fsxa(Imax);
-        }
-    }
+
     //YC[YC_UAB]=1200;
     protection();
 

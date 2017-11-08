@@ -98,7 +98,7 @@ void Rcon(unchar XGbit)
 
     for(i = 0; i < (4 < currmenu.mdatax ? 4 : currmenu.mdatax); i++)
     {
-        if(cur + i == 4 || cur + i == 6 || cur + i == 8 || cur + i == 10 || cur + i == 12 || cur + i == 15 || cur + i == 16 || cur + i == 17  )
+        if(con_sm[cur + i+1] == 0)
         {
             switch(CON[cur + i])
             {

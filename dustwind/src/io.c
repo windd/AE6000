@@ -51,54 +51,25 @@ void YX_init(u8 init)
     if(In4)
     {
         a &= ~GPIO_Pin_3;
-
     }
     else
     {
         a |= GPIO_Pin_3;
-        GZ_Relay_cl;
-        GZ_LED_ON;
     }
     if(In5)
     {
-        if(YX[0] & 0x10)TZ_Reset();
         a &= ~GPIO_Pin_4;
     }
     else
     {
-        if((YX[0] & 0x10) == 0)
-        {
-            if(CON[15] == 0xaa)
-            {
-                TZ_Action();
-            }
-            if(CON[15] == 0xcc)
-            {
-                GZ_Relay_cl;
-                GZ_LED_ON;
-            }
-        }
         a |= GPIO_Pin_4;
     }
     if(In6)
     {
-        if(YX[0] & 0x20)TZ_Reset();
         a &= ~GPIO_Pin_5;
     }
     else
     {
-        if((YX[0] & 0x20) == 0)
-        {
-            if(CON[16] == 0xaa)
-            {
-                TZ_Action();
-            }
-            if(CON[16] == 0xcc)
-            {
-                GZ_Relay_cl;
-                GZ_LED_ON;
-            }
-        }
         a |= GPIO_Pin_5;
     }
     if(In7)
@@ -108,28 +79,13 @@ void YX_init(u8 init)
     else
     {
         a |= GPIO_Pin_6;
-        GZ_Relay_cl;
-        GZ_LED_ON;
     }
     if(In8)
     {
-        if(YX[0] & 0x80)TZ_Reset();
         a &= ~GPIO_Pin_7;
     }
     else
     {
-        if((YX[0] & 0x80) == 0)
-        {
-            if(CON[17] == 0xaa)
-            {
-                TZ_Action();
-            }
-            if(CON[17] == 0xcc)
-            {
-                GZ_Relay_cl;
-                GZ_LED_ON;
-            }
-        }
         a |= GPIO_Pin_7;
     }
 
@@ -154,6 +110,7 @@ void YX_init(u8 init)
         }
     }
     YX[0] = a;
+		IOprotection();
 }
 void SYSCLK_Init()
 {
