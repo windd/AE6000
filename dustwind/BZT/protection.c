@@ -98,39 +98,12 @@ void pxI(int16_t *max, int16_t *min, int16_t *p, int16_t *data)
         t = c;
         d = 2;
     }
-
-
     *max = t;
     *min = 0;
     if(YC[0] < 500)
         a = d;
     if(PhaseAngle[0] > 300)
         c = d;
-    /*
-    switch(d)
-    {
-    case 0:
-      if(d==0 && PhaseAngle[0]<300 && PhaseAngle[0]>-1500)
-          *p=55;
-        else
-          *p=0;
-        break;
-    case 1:
-       if(d==1 && ((PhaseAngle[1]<-900 && PhaseAngle[1]>-1800) || (PhaseAngle[1]>900 && PhaseAngle[1]<1800)))
-          *p=55;
-        else
-          *p=0;
-        break;
-    case 2:
-       if(d==2 && PhaseAngle[2]<1500 && PhaseAngle[2]>-300)
-          *p=55;
-        else
-          *p=0;
-        break;
-    }
-    */
-
-
 }
 void TZ_Action(void)
 {
@@ -174,69 +147,81 @@ void TZ_Reset(void)
     T3_Relay_op;
 }
 
+#define DL3_C (YX[0]&0x01)
+#define DL3_O (YX[0]&0x02)
+#define DL1_C (YX[0]&0x04)
+#define DL2_C (YX[0]&0x08)
+#define BS_1  (YX[0]&0x10)
+
+unchar fs1=0;
 void protection(void)
 {
     YX[2] = ProtectionBit;
     if(ProtectionBit == 0 && TIM2->CR1 * 0x01)
     {
-        TIM_Cmd(TIM2, DISABLE);
+        TIM_Cmd(TIM2, DISABLE);TIM2->CNT=0;
     }
-    int16_t Imax, Imin, ULmax, ULmin, UPmax, UPmin, Pmax;
-    pxI(&Imax, &Imin, &Pmax, &YC[YC_PIA]);
-    px(&ULmax, &ULmin, &YC[YC_UAB]);
-    px(&UPmax, &UPmin, &YC[YC_UA]);
-    if(CON[0] == 0xAA) //速断 DZ[0]       CON0
+	u16 dz1,yy,wy;
+  unchar con1,con2;
+  
+  yy=DZ[0];wy=DZ[1];
+  
+  dz1=DZ[3];
+  con1=CON[0];con2=CON[5];
+
+  if( (YC[YC_UAB1]>yy && YC[YC_UAB2]>yy) && (con2!=0xaa ||(YC[YC_UL2]>yy && con2==0xAA))  && DL3_C && DL1_C && (DL2_C==0)&& ((ProtectionBit & 0x01)==0) && (fs1==0)) 
     {
-        if((Imax > DZ[0]) && ((ProtectionBit & 0x01) == 0) )
-        {
-
-            SOEdata[14] = Property_I; //动作属性
-            TZ_out(0, Imax, 0xaa);
-            ProtectionBit |= 0x01;
-
-        }
-        if(Imax < DZ[0] * 0.96 && (ProtectionBit & 0x01) > 0)
-        {
-            ProtectionBit &= ~0x01;
-            TZ_Reset();
-        }
+      Pro_StartTIM2(0);
     }
-    if(CON[1] == 0xAA) //限时速断 DZ[1] DZ[2]    CON1
+  if(TIM2->CNT-ActionTime[0]>1500*20 && (ProtectionBit & 0x01 )>0)
+  {
+    fs1=0x55;ProtectionBit &=~ 0x01;
+  }
+	if((YC[YC_UL2]<yy && con2==0xAA) || DL2_C || BS_1 || con1!=0xAA)
+	{
+		fs1=0;ProtectionBit &=~ 0x01;
+	}
+  
+  if(con1==0xAA)//fs1
+  {
+		if(fs1==0x55)
+		{
+      if(YC[YC_UAB1]<wy && YC[YC_UAB2]<wy && YC[YC_UL2]<wy && YC[YC_I1]<10 && ((ProtectionBit & 0x02)==0))
+      {
+        Pro_StartTIM2(1);
+      }
+		}
+    if((ProtectionBit & 0x02 )>0 && TIM2->CNT-ActionTime[1]>dz1*20)
     {
-        if(Imax > DZ[1] && ((ProtectionBit & 0x02) == 0))
-        {
-            Pro_StartTIM2(1);
-        }
-        if(Imax < DZ[1] * 0.96 && (ProtectionBit & 0x02) > 0)
-        {
-            ProtectionBit &= ~0x02;
-            TZ_Reset();
-        }
-
-        if((ProtectionBit & 0x02) > 0 && TIM2->CNT - ActionTime[1] > DZ[2] * 20)
-        {
-            SOEdata[14] = Property_I; //动作属性
-            TZ_out(1, Imax, 0xaa);
-        }
+      DL1_T_cl;
+      if(DL1_C==0)
+      {
+        DL2_C_cl;
+        DL1_T_op;
+      }
+      if(DL2_C)
+      {
+        ProtectionBit &=~ 0x02; 
+        DL2_C_op;DL1_T_op;
+        SOEdata[9]=0;//保护序号
+        SOEdata[8]=2;
+        SOEdata[14]=1;//1OK 2NO
+        WSOE();
+        YX[2]|=0x01;
+      }
     }
-    if(CON[2] == 0xAA) //过流保护 DZ[3] DZ[4]    CON2
+    if((TIM2->CNT-ActionTime[1]>(dz1+500)*20) && (ProtectionBit & 0x02 )>0)
     {
-        if(Imax > DZ[3] && ((ProtectionBit & 0x04) == 0))
-        {
-            Pro_StartTIM2(2);
-        }
-        if(Imax < DZ[3] * 0.96 && (ProtectionBit & 0x04) > 0)
-        {
-            ProtectionBit &= ~0x04;
-            TZ_Reset();
-        }
-
-        if((ProtectionBit & 0x04) && TIM2->CNT - ActionTime[2] > DZ[4] * 20)
-        {
-            SOEdata[14] = Property_I; //动作属性
-            TZ_out(2, Imax, 0xaa);
-        }
+         ProtectionBit &=~ 0x02; 
+         fs1=0;
+         DL2_C_op;DL1_T_op; GZ_Relay_cl;  
+         SOEdata[9]=0;
+         SOEdata[8]=2;
+         SOEdata[14]=2;
+         WSOE(); 
+         YX[2]|=0x02;
     }
+  }
 }
 
 void IOprotection(void){

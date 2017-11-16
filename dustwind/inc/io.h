@@ -9,6 +9,29 @@
 //#define QF_Relay_cl        GPIO_ResetBits(GPIOB, GPIO_Pin_13);GPIO_SetBits(GPIOB, GPIO_Pin_14)
 //#define QF_Relay_op        GPIO_SetBits(GPIOB, GPIO_Pin_13);GPIO_ResetBits(GPIOB, GPIO_Pin_14)
 
+/************************BZT****************************/
+#define DL3_C_cl GPIO_ResetBits(GPIOG, GPIO_Pin_5)
+#define DL3_C_op GPIO_SetBits(GPIOG, GPIO_Pin_5)
+
+#define DL3_T_cl GPIO_ResetBits(GPIOG, GPIO_Pin_4)
+#define DL3_T_op GPIO_SetBits(GPIOG, GPIO_Pin_4)
+
+#define DL1_C_cl GPIO_ResetBits(GPIOG, GPIO_Pin_3)
+#define DL1_C_op GPIO_SetBits(GPIOG, GPIO_Pin_3)
+
+#define DL1_T_cl GPIO_ResetBits(GPIOG, GPIO_Pin_2)
+#define DL1_T_op GPIO_SetBits(GPIOG, GPIO_Pin_2)
+
+#define DL2_C_cl GPIO_ResetBits(GPIOD, GPIO_Pin_15)
+#define DL2_C_op GPIO_SetBits(GPIOD, GPIO_Pin_15)
+
+#define DL2_T_cl GPIO_ResetBits(GPIOD, GPIO_Pin_14)
+#define DL2_T_op GPIO_SetBits(GPIOD, GPIO_Pin_14)
+
+#define GZ_Relay_cl GPIO_ResetBits(GPIOD, GPIO_Pin_13)
+#define GZ_Relay_op GPIO_SetBits(GPIOD, GPIO_Pin_13)
+
+/************************OTHER****************************/
 #define YH_Relay_cl GPIO_ResetBits(GPIOG, GPIO_Pin_5)
 #define YH_Relay_op GPIO_SetBits(GPIOG, GPIO_Pin_5)
 

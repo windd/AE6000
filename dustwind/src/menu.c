@@ -74,7 +74,7 @@ void Dis_num(int16_t y, int16_t x, short num, char xsd)
     LCDWchar(y, x, 0, data); //YC
 }
 
-void Dis_YC_Temp(int16_t y, int16_t x, unsigned char   *xh, char len)
+void Dis_YC_Temp(int16_t y, int16_t x,const unsigned char   *xh, char len)
 {
     unchar i, b;
     unchar dh[2] = {1, 33};
@@ -98,241 +98,27 @@ void Dis_YC_Temp(int16_t y, int16_t x, unsigned char   *xh, char len)
         }
     }
 }
-
+void DisMain()
+{
+	int i,a=0;
+	for(i=1;i<currmenu.cur;i++)
+	{
+		a+=mainmenunum[i-1];
+	}
+	LCDWword(1, 2, 0, &mainmenu[a][0]);
+	for(i=1;i<mainmenunum[currmenu.cur-1];i++)
+	{
+		LCDWchar(i+1, 0, 0, &mainmenu[a+1][0]);
+	}
+}
 void DisYC()
 {
-    //  int32_t kao;
-    //  int32_t YCDisData = 0;
-    //  unchar YCbit[9], b, a;
-    //  unchar unit[6];
-
-    unchar Dis_YC_Content1[3] = {YC_MIA , YC_MIB , YC_MIC};
-    unchar Dis_YC_Content2[3] = {YC_PIA , YC_PIB , YC_PIC};
-    unchar Dis_YC_Content3[3] = {YC_UA , YC_UB , YC_UC};
-    unchar Dis_YC_Content4[3] = {YC_UAB , YC_UBC , YC_UCA};
-    unchar Dis_YC_Content5[2] = {YC_I01 , YC_U01};
-    unchar Dis_YC_Content6[2] = {YC_I2 , YC_U2};
-    unchar Dis_YC_Content7[2] = {YC_F , YC_COS};
-    unchar Dis_YC_Content8[2] = {YC_P , YC_Q};
-
-
-    switch(currmenu.cur)
-    {
-    case 1:
-        Dis_YC_Temp(2, 0, Dis_YC_Content1, 3);
-        break;
-    case 5:
-        Dis_YC_Temp(2, 0, Dis_YC_Content2, 3);
-        break;
-    case 9:
-        Dis_YC_Temp(2, 0, Dis_YC_Content3, 3);
-        break;
-    case 13:
-        Dis_YC_Temp(2, 0, Dis_YC_Content4, 3);
-        break;
-    case 17:
-        Dis_YC_Temp(2, 0, Dis_YC_Content5, 2);
-        break;
-    case 20:
-        Dis_YC_Temp(2, 0, Dis_YC_Content6, 2);
-        break;
-    case 23:
-        Dis_YC_Temp(2, 0, Dis_YC_Content7, 2);
-        break;
-    case 26:
-        Dis_YC_Temp(2, 0, Dis_YC_Content8, 2);
-        break;
-    default:
-        break;
-    }
-    /*
-    if(currmenu.cur > 16)
-    {
-    b = (currmenu.cur - 17) / 3 * 2 + 12;
-    a = 2;
-    }
-    else
-    {
-    b = currmenu.cur - currmenu.cur / 4 - 1;
-    a = 3;
-    }
-    for(i = 0; i < a; i++)
-    {
-    switch(i + b)
-    {
-    case 3:
-    case 4:
-    case 5:
-        kao = YC[i + b];
-        unit[0] = 1;
-        unit[1] = 12;
-        break;
-    case 16:
-        kao = YC[i + b];
-        unit[0] = 2;
-        unit[1] = 18;
-        unit[2] = 19;
-        break;
-    case 17:
-        kao = YC[i + b];
-        unit[0] = 0;
-        break;
-    case 0:
-    case 1:
-    case 2:
-    case 12:
-    case 14:
-        YCDisData = YC[i + b] * SYS[3];
-        if(YCDisData > 99999)
-        {
-            kao = YCDisData / 1000;
-            unit[0] = 2;
-            unit[1] = 22;
-            unit[2] = 12;
-        }
-        else
-        {
-            kao = YCDisData;
-            unit[0] = 2;
-            unit[1] = 12;
-            unit[2] = 31;
-        }
-        break;
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-    case 10:
-    case 11:
-    case 13:
-    case 15:
-        YCDisData = YC[i + b] * SYS[2];
-        if(YCDisData > 99999)
-        {
-            kao = YCDisData / 1000;
-            unit[0] = 2;
-            unit[1] = 22;
-            unit[2] = 16;
-        }
-        else
-        {
-            kao = YCDisData;
-            unit[0] = 2;
-            unit[1] = 16;
-            unit[2] = 31;
-        }
-        break;
-    case 18:  //P
-        YCDisData = YC[i + b] * SYS[2] * SYS[3];
-        if(YCDisData > 9999 || YCDisData < -9999)
-        {
-            kao = YCDisData / 1000;
-            unit[0] = 2;
-            unit[1] = 22;
-            unit[2] = 21;
-        }
-        else
-        {
-            kao = YCDisData;
-            unit[0] = 2;
-            unit[1] = 21;
-            unit[2] = 31;
-        }
-        break;
-    case 19:   //Q
-        YCDisData = YC[i + b] * SYS[2] * SYS[3];
-        if(YCDisData > 9999 || YCDisData < -9999)
-        {
-            kao = YCDisData / 1000;
-            unit[0] = 4;
-            unit[1] = 22;
-            unit[2] = 16;
-            unit[3] = 26;
-            unit[4] = 27;
-        }
-        else
-        {
-            kao = YCDisData;
-            unit[0] = 4;
-            unit[1] = 16;
-            unit[2] = 26;
-            unit[3] = 27;
-            unit[4] = 31;
-        }
-        break;
-    }
-    u8 yy = 0;
-    if(YCDisData < 0)
-    {
-        yy = 1;
-        YCbit[1] = 31;
-    }
-    YCbit[0] = 6 + yy;
-    if(kao < 0)kao = 0 - kao;
-    YCbit[1 + yy] = kao / 10000;
-    YCbit[1 + yy] = YCbit[1 + yy] == 0 ? 31 : YCbit[1 + yy];
-    YCbit[2 + yy] = (kao % 10000) / 1000;
-    if(YCbit[1 + yy] == 31)
-        YCbit[2 + yy] = YCbit[2 + yy] == 0 ? 31 : YCbit[2 + yy];
-    YCbit[3 + yy] = (kao % 1000) / 100;
-    if(i + b == 18 || i + b == 19)
-    {
-        YCbit[4 + yy] = (kao % 100) / 10;
-        YCbit[5 + yy] = 10;
-    }
-    else
-    {
-        YCbit[4 + yy] = 10;
-        YCbit[5 + yy] = (kao % 100) / 10;
-    }
-    YCbit[6 + yy] = kao % 10;
-    if(YCDisData < 0)
-    {
-        if(YCbit[2 + yy] == 31)
-            YCbit[2 + yy] = 32;
-        else if(YCbit[1 + yy] == 31)
-            YCbit[1 + yy] = 32;
-        else
-            YCbit[0 + yy] = 32;
-    }
-    if(i + b == 17) //COS
-    {
-        YCbit[0] = 6;
-        YCbit[1] = 31;
-        YCbit[2] = 0;
-        YCbit[4] = YCbit[3];
-        YCbit[3] = 10;
-    }
-    LCDWchar(2 + i, mainmenu[currmenu.cur + i][0], 0, YCbit); //YC
-    LCDWchar(2 + i, mainmenu[currmenu.cur + i][0] + 7, 0, &unit[0]); //UNIT
-    if(i + b < 16) //32-
-    {
-        YCbit[0] = 8;
-        kao = PhaseAngle[i + b];
-        if(kao < 0) kao = 0 - kao;
-        YCbit[1] = 31;
-        YCbit[2] = kao / 10000;
-        YCbit[2] = YCbit[2] == 0 ? 31 : YCbit[2];
-        YCbit[3] = (kao % 10000) / 1000;
-        if(YCbit[2] == 31) YCbit[3] = YCbit[3] == 0 ? 31 : YCbit[3];
-        YCbit[4] = (kao % 1000) / 100;
-        YCbit[5] = (kao % 100) / 10;
-        YCbit[6] = 10;
-        YCbit[7] = kao % 10;
-        if(PhaseAngle[i + b] < 0)
-        {
-            if(YCbit[3] == 31)
-                YCbit[3] = 32;
-            else if(YCbit[2] == 31)
-                YCbit[2] = 32;
-            else
-                YCbit[1] = 32;
-        }
-        YCbit[8] = 33;
-        LCDWchar(2 + i, mainmenu[currmenu.cur + i][0] + 9, 0, YCbit);	 //½Ç¶È
-    }
-    }
-    */
+	int i,a=0;
+	for(i=1;i<currmenu.cur;i++)
+	{
+		a+=mainmenunum[i-1]-1;
+	}
+   Dis_YC_Temp(2, 0, &Dis_YC_Content[a], mainmenunum[currmenu.cur]-1);
 }
 
 
@@ -526,19 +312,9 @@ void menusub(unchar key)
         }
         if(currmenu.ID == 0)
         {
-            if(currmenu.cur == 1)
-                currmenu.cur = 26;
-            else if(currmenu.cur > 19)
-                currmenu.cur -= 3;
-            else
-                currmenu.cur -= 4;
-            LCDWword(1, 2, 0, &mainmenu[currmenu.cur - 1][0]);
-            LCDWchar(2, 0, 0, &mainmenu[currmenu.cur][0]);
-            LCDWchar(3, 0, 0, &mainmenu[currmenu.cur + 1][0]);
-            if(currmenu.cur < 17)
-            {
-                LCDWchar(4, 0, 0, &mainmenu[currmenu.cur + 2][0]);
-            }
+					currmenu.cur = currmenu.cur > 1 ? currmenu.cur-1 : currmenu.mdatax;
+
+            DisMain();
             DisYC();
         }
         else
@@ -980,19 +756,9 @@ void menusub(unchar key)
         }
         if(currmenu.ID == 0)
         {
-            if(currmenu.cur == 26)
-                currmenu.cur = 1;
-            else if(currmenu.cur > 16)
-                currmenu.cur += 3;
-            else
-                currmenu.cur += 4;
-            LCDWword(1, 2, 0, &mainmenu[currmenu.cur - 1][0]);
-            LCDWchar(2, 0, 0, &mainmenu[currmenu.cur][0]);
-            LCDWchar(3, 0, 0, &mainmenu[currmenu.cur + 1][0]);
-            if(currmenu.cur < 17)
-            {
-                LCDWchar(4, 0, 0, &mainmenu[currmenu.cur + 2][0]);
-            }
+            currmenu.cur = currmenu.cur < currmenu.mdatax ? currmenu.cur+1 : 1;
+
+            DisMain();
             DisYC();
         }
         else
