@@ -29,12 +29,6 @@ unsigned char unit[7][4] = //A.0 /V.1 /W.2 /VAR.3 /Пе.4 /HZ.5 /S.6
     {1, 21}, {3, 16, 26, 27}, {0}, {2, 18, 19}, {1, 25},
 };
 
-u8 YCunit[YCnum] =
-{
-    UNIT_I, UNIT_I, UNIT_I, UNIT_I, UNIT_I, UNIT_I,
-    UNIT_U, UNIT_U, UNIT_U, UNIT_U, UNIT_U, UNIT_U,
-    UNIT_I, UNIT_U, UNIT_I, UNIT_U, UNIT_I, UNIT_U,
-    UNIT_F, UNIT_P, UNIT_Q, UNIT__
-};
+
 //Password 0 SYS 1 DZ 10 CON 90  SOE 150
 

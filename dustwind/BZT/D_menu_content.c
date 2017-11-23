@@ -2,33 +2,33 @@
 
 #include "D_menu_content.h"
 
-
-const unchar  mainmenunum[10] = 
-{
-	4,3,3,3,3
-};
-const unchar Dis_YC_Content[30]={
-	YC_I1,YC_I2,YC_MIA , YC_MIB , YC_MIC,YC_UAB1,YC_UBC1,YC_UAB2,YC_UBC2,YC_UL1,YC_UL2,
+//angle,xsd,len,content..,
+const unchar Dis_YC_Content[][7]={
+	{0,3,4,YC_MIA , YC_MIB , YC_MIC},
+	{0,3,3,YC_I1,YC_I2},
+	{0,3,3,YC_UAB1,YC_UBC1},
+	{0,3,3,YC_UAB2,YC_UBC2},
+	{0,3,3,YC_UL1,YC_UL2},
 };
 
 const unchar  mainmenu[16][7] = //测量菜单[0123456789.]11I 12A 13B 14C 15U 16V 17F 18H 19Z 20P 21W 22K 23M 24Q 25V 26a 27r 28= 29o 30s 31
 {
     {4, 15, 50, 31, 48}, //Iabc
-    {3, 11, 12, 28},
-    {3, 11, 13, 28},
-    {3, 11, 14, 28},
+    {2, 11, 12},
+    {2, 11, 13},
+    {2, 11, 14},
     {4, 46, 47, 31, 48}, //I1 I2
-    {3, 11, 12, 28},
-    {3, 11, 13, 28},
-    {3, 56, 31, 52}, //UAB1 UBC1
-    {3, 15, 12, 28},
-    {3, 15, 13, 28},
-    {3, 57, 31, 52}, //UAB2 UBC2
-    {4, 15, 12, 13, 28},
-    {4, 15, 13, 14, 28},
-    {2, 58, 59}, //UL1 UL2
-    {3, 11, 0, 28},
-    {3, 15, 0, 28},
+    {2, 11, 1},
+    {2, 11, 2},
+    {2, 31, 52}, //UAB1 UBC1
+    {4, 15, 12,13,1},
+    {4, 15, 13,14,1},
+    {2, 31, 52}, //UAB2 UBC2
+    {4, 15, 12,13,2},
+    {4, 15, 13,14,2},
+    {2, 31, 52}, //UL1 UL2
+    {2, 15, 1},
+    {2, 15, 2},
 };
 
 const unchar  menuID1111[DZnum][7] = //定值设置
@@ -44,21 +44,12 @@ const unchar  menuID1111[DZnum][7] = //定值设置
     {5, 87, 156, 159, 83, 10}, //方式3t
 		
     {5, 87, 156, 160, 83, 10}, //方式4t
-
-
-
 };
 
 
-const unchar DZunit[DZnum][3] = //定值单位   12A 30S 16V  1819HZ
+const unchar DZunit[DZnum] = //定值单位   12A 30S 16V  1819HZ
 {
-    {1, 16},
-    {1, 16},
-    {1, 30},
-    {1, 30},
-    {1, 30},
-    {1, 30},
-
+ UNIT_U,UNIT_U,UNIT_T,UNIT_T,UNIT_T,UNIT_T,
 };
 
 const unchar Prot_sm[12] = {0, 1, 2, 3} ; //SOE显示保护名字,

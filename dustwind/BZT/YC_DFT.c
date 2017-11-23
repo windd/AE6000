@@ -174,7 +174,7 @@ void YCDFT()
         YCArray[ADCa][k] = (int)a;
         YCArray[ADCb][k] = (int)b;
     }
-  
+ // for(i=0;i<15;i++)YC[i]=i;
 
     //YC[YC_UAB]=1200;
     protection();

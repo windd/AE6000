@@ -397,7 +397,7 @@ void Dis_DZ(unchar cur, unchar Fx, unchar Fy) //dis DZ
         {
             LCDWchar(i + 1, 13, 0, Fdata);
         }
-        LCDWchar(i + 1, 20, 0, DZunit[cur + i - 1]);
+        LCDWchar(i + 1, 20, 0, &unit[DZunit[cur + i - 1]][0]);
     }
 }
 

@@ -110,7 +110,10 @@ extern const unchar  mainmenu[16][7];
 
 
 /*************COM********************/
-#define YCnum 26
+#define YC_Custom1 30
+
+
+#define YCnum 40
 #define SYSnum 22
 #define YXnum 8
 #define OUTnum 20
@@ -145,12 +148,12 @@ extern const unchar  mainmenu[16][7];
 
 extern structmenu  MENU[16];
 extern const unchar con_sm[CONnum+1];
-extern const unchar DZunit[DZnum][3];
+extern const unchar DZunit[DZnum];
 extern const unchar  menuID1112[CONnum][9];
 extern const unchar  menuID16[4][8];
 extern const unchar Prot_sm[12];
-extern const unchar  mainmenunum[10];
-extern const unchar Dis_YC_Content[30];
+
+extern const unchar Dis_YC_Content[][7];
 
 #endif
 

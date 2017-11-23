@@ -400,7 +400,7 @@ void protection(void)
 
     if(CON[18] == 0xAA) //PT¶ÏÏß  CON18
     {
-        if((LowV > 800 && UPmin < 800) || (LowV > 800 && ULmin < 1600) || (UPmax < 800 && Imax > 30))
+        if((YC[YC_Custom1] > 800 && UPmin < 800) || (YC[YC_Custom1] > 800 && ULmin < 1600) || (UPmax < 800 && Imax > 30))
         {
             if((ProtectionBit & 0x400) == 0)
                 Pro_StartTIM2(10);

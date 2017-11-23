@@ -74,51 +74,53 @@ void Dis_num(int16_t y, int16_t x, short num, char xsd)
     LCDWchar(y, x, 0, data); //YC
 }
 
-void Dis_YC_Temp(int16_t y, int16_t x,const unsigned char   *xh, char len)
-{
-    unchar i, b;
-    unchar dh[2] = {1, 33};
-    for(i = 0; i < len; i++)
-    {
-        x = mainmenu[currmenu.cur + i][0];
-        if(currmenu.cur == 26)
-            b = 2;
-        else
-            b = 3;
-        if(currmenu.cur + i == 24)
-            b = 4;
-        else
-            b = 3;
-        Dis_num(y + i, x, YC[*(xh + i)], b); //YC
-        LCDWchar(y + i, x + 7, 0, &unit[YCunit[*(xh + i)]][0]); //UNIT
-        if(len == 3)
-        {
-            Dis_num(y + i, x + 9, PhaseAngle[*(xh + i)], 2); //½Ç¶È
-            LCDWchar(y + i, x + 16, 0, dh); //¡£ºÅ
-        }
-    }
-}
 void DisMain()
 {
 	int i,a=0;
 	for(i=1;i<currmenu.cur;i++)
 	{
-		a+=mainmenunum[i-1];
+		a+=Dis_YC_Content[i-1][2];
 	}
 	LCDWword(1, 2, 0, &mainmenu[a][0]);
-	for(i=1;i<mainmenunum[currmenu.cur-1];i++)
+	for(i=1;i<Dis_YC_Content[currmenu.cur-1][2];i++)
 	{
-		LCDWchar(i+1, 0, 0, &mainmenu[a+1][0]);
+		LCDWchar(i+1, 0, 0, &mainmenu[i+a][0]);
 	}
 }
 void DisYC()
 {
-	int i,a=0;
+	int i,a=0,x=4,y=1,m=0,len;
+  unchar dh[2] = {1, 33};
 	for(i=1;i<currmenu.cur;i++)
 	{
-		a+=mainmenunum[i-1]-1;
+		a+=Dis_YC_Content[i-1][2];
 	}
-   Dis_YC_Temp(2, 0, &Dis_YC_Content[a], mainmenunum[currmenu.cur]-1);
+		len=Dis_YC_Content[currmenu.cur-1][2];
+    for(i = 1; i < len; i++)
+    {
+      Dis_num(y + i, x, YC[Dis_YC_Content[currmenu.cur-1][i+2]], Dis_YC_Content[currmenu.cur-1][1]); //YC
+			switch(mainmenu[a+i][1])
+			{
+				case 11:
+					m=UNIT_I;break;
+				case 15:
+					m=UNIT_U;break;
+				case 14:
+					m=UNIT__;break;
+				case 17:
+					m=UNIT_F;break;
+				case 20:
+					m=UNIT_P;break;
+				case 24:
+					m=UNIT_Q;break;
+			}
+        LCDWchar(y + i, x + 7, 0, &unit[m][0]); //UNIT
+        if(Dis_YC_Content[currmenu.cur-1][0] == 1)
+        {
+            Dis_num(y + i, x + 9, PhaseAngle[Dis_YC_Content[currmenu.cur-1][i+2]], 2); //½Ç¶È
+            LCDWchar(y + i, x + 16, 0, dh); //¡£ºÅ
+        }
+    }
 }
 
 

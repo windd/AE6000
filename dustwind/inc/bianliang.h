@@ -30,7 +30,6 @@ extern u8 SOEdata[27];
 
 
 extern unsigned char unit[7][4];
-extern u8 YCunit[YCnum];
 
 
 #endif
