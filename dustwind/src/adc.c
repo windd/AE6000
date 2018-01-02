@@ -141,6 +141,8 @@ void ADC1_Config(void)
     ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 6, ADC1_CYtime);
     ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 7, ADC1_CYtime);
     ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 8, ADC1_CYtime);
+		//ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 8, ADC1_CYtime);
+		//ADC_RegularChannelConfig(ADC1, ADC_Channel_5, 8, ADC1_CYtime);
     ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 9, ADC1_CYtime);
     ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 10, ADC1_CYtime);
     ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 11, ADC1_CYtime);

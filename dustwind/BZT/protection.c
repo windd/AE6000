@@ -166,7 +166,7 @@ void protection(void)
   
   yy=DZ[0];wy=DZ[1];
   
-  dz1=DZ[3];
+  dz1=DZ[2];
   con1=CON[0];con2=CON[5];
 
   if( (YC[YC_UAB1]>yy && YC[YC_UAB2]>yy) && (con2!=0xaa ||(YC[YC_UL2]>yy && con2==0xAA))  && DL3_C && DL1_C && (DL2_C==0)&& ((ProtectionBit & 0x01)==0) && (fs1==0)) 
