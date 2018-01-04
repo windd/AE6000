@@ -100,10 +100,10 @@ void YCDFT()
         case MIC_Chanel:
             a = a * SYS[SYS_MIC] / 1000;
             b = b * SYS[SYS_MIC] / 1000;
-            YC[SYS_MIC] = (int)(sqrt(a * a + b * b) * XS_PI);
-            if(YC[SYS_MIC] < 5)
+            YC[YC_MIC] = (int)(sqrt(a * a + b * b) * XS_PI);
+            if(YC[YC_MIC] < 5)
             {
-                YC[SYS_MIC] = 0;
+                YC[YC_MIC] = 0;
                 a = 1;
                 b = 0;
             }

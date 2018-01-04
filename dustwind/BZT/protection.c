@@ -149,8 +149,8 @@ void TZ_Reset(void)
 
 #define DL3_C (YX[0]&0x01)
 #define DL3_O (YX[0]&0x02)
-#define DL1_C (YX[0]&0x04)
-#define DL2_C (YX[0]&0x08)
+#define DL1_C ((~YX[0])&0x04)
+#define DL2_C ((~YX[0])&0x08)
 #define BS_1  (YX[0]&0x10)
 
 unchar fs1=0;
@@ -169,7 +169,7 @@ void protection(void)
   dz1=DZ[2];
   con1=CON[0];con2=CON[5];
 
-  if( (YC[YC_UAB1]>yy && YC[YC_UAB2]>yy) && (con2!=0xaa ||(YC[YC_UL2]>yy && con2==0xAA))  && DL3_C && DL1_C && (DL2_C==0)&& ((ProtectionBit & 0x01)==0) && (fs1==0)) 
+  if( (YC[YC_UAB1]>yy) && (YC[YC_UAB2]>yy) && ((con2!=0xaa) ||((YC[YC_UL2]>yy) && (con2==0xAA)))  && (DL3_C>0) && (DL1_C>0) && (DL2_C==0)&& ((ProtectionBit & 0x01)==0) && (fs1==0)) 
     {
       Pro_StartTIM2(0);
     }
@@ -177,7 +177,7 @@ void protection(void)
   {
     fs1=0x55;ProtectionBit &=~ 0x01;
   }
-	if((YC[YC_UL2]<yy && con2==0xAA) || DL2_C || BS_1 || con1!=0xAA)
+	if((YC[YC_UL2]<yy && con2==0xAA) || (DL2_C>0) || (BS_1>0) || (con1!=0xAA))
 	{
 		fs1=0;ProtectionBit &=~ 0x01;
 	}
@@ -186,7 +186,7 @@ void protection(void)
   {
 		if(fs1==0x55)
 		{
-      if(YC[YC_UAB1]<wy && YC[YC_UAB2]<wy && YC[YC_UL2]<wy && YC[YC_I1]<10 && ((ProtectionBit & 0x02)==0))
+      if(YC[YC_UAB1]<wy && YC[YC_UAB2]<wy && YC[YC_UL2]>yy && YC[YC_I1]<10 && ((ProtectionBit & 0x02)==0))
       {
         Pro_StartTIM2(1);
       }
@@ -199,7 +199,7 @@ void protection(void)
         DL2_C_cl;
         DL1_T_op;
       }
-      if(DL2_C)
+      if(DL2_C>0)
       {
         ProtectionBit &=~ 0x02; 
         DL2_C_op;DL1_T_op;
