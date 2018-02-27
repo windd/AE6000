@@ -26,18 +26,15 @@ void DisMainMenu0()
 
 void DisBBH()
 {
-	//LCDWword(1,0,0,menuID16[0]);
+	LCDWword(1,0,0,menuID16[0]);
     
-   // LCDWword(2,0,0,menuID16[1]);
-   // LCDWchar(2,9,0,menuID16[2]);
+    LCDWword(2,0,0,menuID16[1]);
+    LCDWchar(2,9,0,menuID16[2]);
     
-   // LCDWword(3,0,0,menuID16[3]);
-   // LCDWchar(3,9,0,menuID16[4]);
+    LCDWword(3,0,0,menuID16[3]);
+    LCDWchar(3,9,0,menuID16[4]);
 	
-    LCDWword(1, 2, 0, menuID16[0]);
-    LCDWchar(2, 6, 0, menuID16[1]);
-    LCDWchar(3, 7, 0, menuID16[2]);
-    LCDWword(4, 2, 0, menuID16[3]);
+
 }
 
 void Dis_num(int16_t y, int16_t x, short num, char xsd)

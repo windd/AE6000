@@ -150,7 +150,7 @@ extern structmenu  MENU[16];
 extern const unchar con_sm[CONnum+1];
 extern const unchar DZunit[DZnum];
 extern const unchar  menuID1112[CONnum][9];
-extern const unchar  menuID16[4][8];
+extern const unchar  menuID16[5][10];
 extern const unchar Prot_sm[12];
 
 extern const unchar Dis_YC_Content[][7];
